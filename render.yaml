@@ -71,7 +71,6 @@ services:
   - type: web
     name: prismma-system
     runtime: static
-    region: singapore
     buildCommand: cd system && npm install && npm run build
     staticPublishPath: ./system/dist
     envVars:
