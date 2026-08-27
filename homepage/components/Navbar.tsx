@@ -3,7 +3,17 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { Info, Package, Handshake, Newspaper, Mail, Route, Briefcase, Menu, X } from "lucide-react";
+import {
+  Info,
+  Package,
+  Handshake,
+  Newspaper,
+  Mail,
+  Route,
+  Briefcase,
+  Menu,
+  X,
+} from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import LoginButton from "./LoginButton";
 import AnnouncementBanner from "./AnnouncementBanner";
@@ -19,14 +29,24 @@ const ICON_MAP: Record<string, typeof Info> = {
   careers: Briefcase,
 };
 
-export default function Navbar({ nav, announcement }: { nav: NavPage[]; announcement: Announcement }) {
+export default function Navbar({
+  nav,
+  announcement,
+}: {
+  nav: NavPage[];
+  announcement: Announcement;
+}) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const visibleSlugs = new Set(nav.map((p) => p.slug));
   const navLinks = nav
     .filter((p) => p.slug !== "get-a-quote" && p.slug !== "careers")
-    .map((p) => ({ href: `/${p.slug}`, label: p.label, icon: ICON_MAP[p.slug] || Info }));
+    .map((p) => ({
+      href: `/${p.slug}`,
+      label: p.label,
+      icon: ICON_MAP[p.slug] || Info,
+    }));
   const showGetAQuote = visibleSlugs.has("get-a-quote");
 
   useEffect(() => {
@@ -45,12 +65,20 @@ export default function Navbar({ nav, announcement }: { nav: NavPage[]; announce
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
-        scrolled || mobileOpen ? "bg-white/85 backdrop-blur-md shadow-sm" : "bg-white/65 backdrop-blur-md"
+        scrolled || mobileOpen
+          ? "bg-white/85 backdrop-blur-md shadow-sm"
+          : "bg-white/65 backdrop-blur-md"
       }`}
     >
-      {announcement.enabled && announcement.message && <AnnouncementBanner message={announcement.message} />}
+      {announcement.enabled && announcement.message && (
+        <AnnouncementBanner message={announcement.message} />
+      )}
       <div className="mx-auto max-w-[1600px] px-4 sm:px-8 h-24 flex items-center justify-between gap-6">
-        <Link href="/" className="flex items-center shrink-0" onClick={() => setMobileOpen(false)}>
+        <Link
+          href="/"
+          className="flex items-center shrink-0"
+          onClick={() => setMobileOpen(false)}
+        >
           <Image
             src="/assets/logos/prismma_main_logo.png"
             alt="Prismma Express"
@@ -60,7 +88,7 @@ export default function Navbar({ nav, announcement }: { nav: NavPage[]; announce
           />
         </Link>
 
-        <nav className="hidden 2xl:flex items-center gap-8">
+        <nav className="hidden sm:flex items-center gap-8">
           {navLinks.map((link) => {
             const Icon = link.icon;
             return (
@@ -69,7 +97,10 @@ export default function Navbar({ nav, announcement }: { nav: NavPage[]; announce
                 href={link.href}
                 className="relative flex items-center gap-2 text-base text-body hover:text-brand-navy transition-colors whitespace-nowrap group"
               >
-                <Icon size={18} className="opacity-60 group-hover:opacity-100 transition-opacity" />
+                <Icon
+                  size={18}
+                  className="opacity-60 group-hover:opacity-100 transition-opacity"
+                />
                 {link.label}
                 <span className="absolute -bottom-2 left-0 w-0 h-px bg-brand-orange transition-all group-hover:w-full" />
               </Link>
@@ -77,7 +108,7 @@ export default function Navbar({ nav, announcement }: { nav: NavPage[]; announce
           })}
         </nav>
 
-        <div className="hidden 2xl:flex items-center gap-4 shrink-0">
+        <div className="hidden sm:flex items-center gap-4 shrink-0">
           {showGetAQuote && (
             <Link
               href="/get-a-quote"
@@ -93,7 +124,7 @@ export default function Navbar({ nav, announcement }: { nav: NavPage[]; announce
           type="button"
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
           onClick={() => setMobileOpen((v) => !v)}
-          className="2xl:hidden flex items-center justify-center w-10 h-10 rounded-md text-brand-navy shrink-0"
+          className="sm:hidden flex items-center justify-center w-10 h-10 rounded-md text-brand-navy shrink-0"
         >
           {mobileOpen ? <X size={26} /> : <Menu size={26} />}
         </button>
@@ -108,7 +139,7 @@ export default function Navbar({ nav, announcement }: { nav: NavPage[]; announce
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.22, ease: [0.4, 0, 0.2, 1] }}
-            className="2xl:hidden bg-white border-t border-black/5 shadow-lg"
+            className="sm:hidden bg-white border-t border-black/5 shadow-lg"
           >
             <nav className="flex flex-col px-6 py-4">
               {navLinks.map((link, i) => {
