@@ -13,6 +13,7 @@ import {
   Briefcase,
   Menu,
   X,
+  LogIn,
 } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import LoginButton from "./LoginButton";
@@ -75,7 +76,7 @@ export default function Navbar({
       {announcement.enabled && announcement.message && (
         <AnnouncementBanner message={announcement.message} />
       )}
-      <div className="mx-auto max-w-[1600px] px-4 sm:px-8 h-16 flex items-center justify-between gap-6">
+      <div className="mx-auto max-w-[1600px] px-3 sm:px-6 lg:px-8 py-2 sm:py-0 sm:h-16 flex flex-wrap items-center justify-between gap-x-3 gap-y-2 sm:gap-x-4 lg:gap-x-6">
         <Link
           href="/"
           className="flex items-center shrink-0"
@@ -84,24 +85,24 @@ export default function Navbar({
           <Image
             src="/assets/logos/prismma_main_logo.png"
             alt="Prismma Express"
-            width={160}
-            height={28}
+            width={140}
+            height={24}
             priority
           />
         </Link>
 
-        <nav className="hidden sm:flex items-center gap-8">
+        <nav className="hidden sm:flex items-center gap-2 lg:gap-6 flex-wrap">
           {navLinks.map((link) => {
             const Icon = link.icon;
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className="relative flex items-center gap-2 text-base text-body hover:text-brand-navy transition-colors whitespace-nowrap group"
+                className="relative flex items-center gap-1.5 text-xs lg:text-base text-body hover:text-brand-navy transition-colors whitespace-nowrap group"
               >
                 <Icon
-                  size={18}
-                  className="opacity-60 group-hover:opacity-100 transition-opacity"
+                  size={14}
+                  className="opacity-60 group-hover:opacity-100 transition-opacity hidden lg:inline"
                 />
                 {link.label}
                 <span className="absolute -bottom-2 left-0 w-0 h-px bg-brand-orange transition-all group-hover:w-full" />
@@ -110,11 +111,11 @@ export default function Navbar({
           })}
         </nav>
 
-        <div className="hidden sm:flex items-center gap-3 shrink-0">
+        <div className="hidden sm:flex items-center gap-1.5 lg:gap-3 shrink-0 flex-wrap">
           {showGetAQuote && (
             <Link
               href="/get-a-quote"
-              className="rounded-md bg-brand-orange px-4 py-2 text-sm font-medium text-white hover:opacity-90 transition-opacity whitespace-nowrap"
+              className="rounded-md bg-brand-orange px-2.5 py-1.5 lg:px-4 lg:py-2 text-xs lg:text-sm font-medium text-white hover:opacity-90 transition-opacity whitespace-nowrap"
             >
               Get a Quote
             </Link>
@@ -122,8 +123,9 @@ export default function Navbar({
           <LoginButton label="Internal Portal" size="default" />
           <Link
             href={PRISMMAOS_URL}
-            className="inline-flex items-center gap-2 rounded-md border border-brand-navy px-4 py-2 text-sm font-medium text-brand-navy hover:bg-brand-navy hover:text-white transition-colors whitespace-nowrap"
+            className="inline-flex items-center gap-1.5 rounded-md border border-brand-navy px-2.5 py-1.5 lg:px-4 lg:py-2 text-xs lg:text-sm font-medium text-brand-navy hover:bg-brand-navy hover:text-white transition-colors whitespace-nowrap"
           >
+            <LogIn size={14} />
             PrismmaOS
           </Link>
         </div>
@@ -185,6 +187,7 @@ export default function Navbar({
                   href={PRISMMAOS_URL}
                   className="flex items-center justify-center gap-2 rounded-md border border-brand-navy px-5 py-2.5 text-sm font-medium text-brand-navy"
                 >
+                  <LogIn size={16} />
                   PrismmaOS
                 </Link>
               </div>
