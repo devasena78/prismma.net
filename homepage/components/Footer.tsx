@@ -1,6 +1,16 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Facebook, Instagram, Linkedin, Youtube, Twitter, Link2, MapPin, Phone, Mail } from "lucide-react";
+import {
+  Facebook,
+  Instagram,
+  Linkedin,
+  Youtube,
+  Twitter,
+  Link2,
+  MapPin,
+  Phone,
+  Mail,
+} from "lucide-react";
 import type { NavPage, SiteInfo, SiteLink } from "@/lib/site-settings";
 
 function socialIcon(label: string) {
@@ -20,7 +30,12 @@ interface FooterProps {
   footerLinks: SiteLink[];
 }
 
-export default function Footer({ nav, siteInfo, socialLinks, footerLinks }: FooterProps) {
+export default function Footer({
+  nav,
+  siteInfo,
+  socialLinks,
+  footerLinks,
+}: FooterProps) {
   const companyLinks = nav.map((p) => ({ href: `/${p.slug}`, label: p.label }));
 
   return (
@@ -34,14 +49,20 @@ export default function Footer({ nav, siteInfo, socialLinks, footerLinks }: Foot
             height={28}
           />
           <p className="mt-5 text-sm text-white/60 max-w-xs">
-            Reliable, cost-effective logistics solutions across air, sea, and land.
+            Reliable, cost-effective logistics solutions across air, sea, and
+            land.
           </p>
           {socialLinks.length > 0 && (
             <div className="flex gap-5 mt-6">
               {socialLinks.map((l) => {
                 const Icon = socialIcon(l.label);
                 return (
-                  <a key={l.id} href={l.url} aria-label={l.label} className="hover:text-brand-orange transition-colors">
+                  <a
+                    key={l.id}
+                    href={l.url}
+                    aria-label={l.label}
+                    className="hover:text-brand-orange transition-colors"
+                  >
                     <Icon size={22} />
                   </a>
                 );
@@ -53,12 +74,27 @@ export default function Footer({ nav, siteInfo, socialLinks, footerLinks }: Foot
         <div>
           <h4 className="font-display font-semibold text-lg mb-4">Company</h4>
           <ul className="space-y-2 text-white/70">
-            <li><Link href="/" className="hover:text-white transition-colors">Home</Link></li>
+            <li>
+              <Link href="/" className="hover:text-white transition-colors">
+                Home
+              </Link>
+            </li>
             {companyLinks.map((l) => (
-              <li key={l.href}><Link href={l.href} className="hover:text-white transition-colors">{l.label}</Link></li>
+              <li key={l.href}>
+                <Link
+                  href={l.href}
+                  className="hover:text-white transition-colors"
+                >
+                  {l.label}
+                </Link>
+              </li>
             ))}
             {footerLinks.map((l) => (
-              <li key={l.id}><a href={l.url} className="hover:text-white transition-colors">{l.label}</a></li>
+              <li key={l.id}>
+                <a href={l.url} className="hover:text-white transition-colors">
+                  {l.label}
+                </a>
+              </li>
             ))}
           </ul>
         </div>
@@ -66,11 +102,46 @@ export default function Footer({ nav, siteInfo, socialLinks, footerLinks }: Foot
         <div>
           <h4 className="font-display font-semibold text-lg mb-4">Services</h4>
           <ul className="space-y-2 text-white/70">
-            <li><Link href="/services#air-freight" className="hover:text-white transition-colors">Air Freight</Link></li>
-            <li><Link href="/services#sea-freight" className="hover:text-white transition-colors">Sea Freight</Link></li>
-            <li><Link href="/services#land-transport" className="hover:text-white transition-colors">Land Transport</Link></li>
-            <li><Link href="/services#warehouse-distribution" className="hover:text-white transition-colors">Warehouse and Distribution</Link></li>
-            <li><Link href="/services#customs-brokerage" className="hover:text-white transition-colors">Customs Brokerage</Link></li>
+            <li>
+              <Link
+                href="/services#air-freight"
+                className="hover:text-white transition-colors"
+              >
+                Air Freight
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/services#sea-freight"
+                className="hover:text-white transition-colors"
+              >
+                Sea Freight
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/services#land-transport"
+                className="hover:text-white transition-colors"
+              >
+                Land Transport
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/services#warehouse-distribution"
+                className="hover:text-white transition-colors"
+              >
+                Warehouse and Distribution
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/services#customs-brokerage"
+                className="hover:text-white transition-colors"
+              >
+                Customs Brokerage
+              </Link>
+            </li>
           </ul>
         </div>
 
@@ -99,8 +170,20 @@ export default function Footer({ nav, siteInfo, socialLinks, footerLinks }: Foot
         </div>
       </div>
 
-      <div className="relative border-t border-white/10 py-6 text-center text-sm text-white/50">
-        Copyright {siteInfo.company_name || "Prismma Express Sdn Bhd"} (967851-D). All Rights Reserved.
+      <div className="relative border-t border-white/10 py-6 text-sm text-white/50 flex flex-col sm:flex-row items-center justify-between gap-2 px-6">
+        <p>
+          Copyright {siteInfo.company_name || "Prismma Express Sdn Bhd"}{" "}
+          (967851-D). All Rights Reserved.
+        </p>
+        <p className="text-xs text-white/30">
+          System built by{" "}
+          <a
+            href="mailto:saillesh0323@gmail.com"
+            className="hover:text-brand-orange transition-colors underline underline-offset-2"
+          >
+            Saillesh
+          </a>
+        </p>
       </div>
     </footer>
   );
