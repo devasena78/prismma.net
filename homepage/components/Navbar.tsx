@@ -76,7 +76,7 @@ export default function Navbar({
       {announcement.enabled && announcement.message && (
         <AnnouncementBanner message={announcement.message} />
       )}
-      <div className="mx-auto max-w-[1600px] px-4 md:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      <div className="mx-auto max-w-[1600px] px-4 md:px-6 lg:px-8 py-2 lg:py-0 lg:h-16 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
         <Link
           href="/"
           className="flex items-center shrink-0"
@@ -91,7 +91,7 @@ export default function Navbar({
           />
         </Link>
 
-        <nav className="hidden md:flex items-center gap-3 lg:gap-6">
+        <nav className="hidden lg:flex items-center gap-3 lg:gap-6">
           {navLinks.map((link) => {
             const Icon = link.icon;
             return (
@@ -111,7 +111,7 @@ export default function Navbar({
           })}
         </nav>
 
-        <div className="hidden md:flex items-center gap-1.5 lg:gap-3 shrink-0">
+        <div className="hidden lg:flex items-center gap-1.5 lg:gap-3 shrink-0">
           {showGetAQuote && (
             <Link
               href="/get-a-quote"
@@ -120,7 +120,7 @@ export default function Navbar({
               Get a Quote
             </Link>
           )}
-          <LoginButton label="Internal Portal" size="default" />
+          <LoginButton label="Internal Portal" size="nav" />
           <Link
             href={PRISMMAOS_URL}
             className="inline-flex items-center gap-1.5 rounded-md border border-brand-navy px-2.5 py-1.5 lg:px-4 lg:py-2 text-xs lg:text-sm font-medium text-brand-navy hover:bg-brand-navy hover:text-white transition-colors whitespace-nowrap"
@@ -134,7 +134,7 @@ export default function Navbar({
           type="button"
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
           onClick={() => setMobileOpen((v) => !v)}
-          className="md:hidden flex items-center justify-center w-10 h-10 rounded-md text-brand-navy shrink-0"
+          className="lg:hidden flex items-center justify-center w-10 h-10 rounded-md text-brand-navy shrink-0"
         >
           {mobileOpen ? <X size={26} /> : <Menu size={26} />}
         </button>
@@ -149,7 +149,7 @@ export default function Navbar({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.22, ease: [0.4, 0, 0.2, 1] }}
-            className="md:hidden bg-white border-t border-black/5 shadow-lg"
+            className="lg:hidden bg-white border-t border-black/5 shadow-lg"
           >
             <nav className="flex flex-col px-6 py-4">
               {navLinks.map((link, i) => {
