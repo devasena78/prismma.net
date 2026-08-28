@@ -182,7 +182,7 @@ export default function Navbar({
                     Get a Quote
                   </Link>
                 )}
-                <LoginButton label="Internal Portal" />
+                <LoginButton label="Internal Portal" fullWidth />
                 <Link
                   href={PRISMMAOS_URL}
                   className="flex items-center justify-center gap-2 rounded-md border border-brand-navy px-5 py-2.5 text-sm font-medium text-brand-navy"
