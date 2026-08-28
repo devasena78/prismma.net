@@ -76,7 +76,7 @@ export default function Navbar({
       {announcement.enabled && announcement.message && (
         <AnnouncementBanner message={announcement.message} />
       )}
-      <div className="mx-auto max-w-[1600px] px-3 sm:px-6 lg:px-8 py-2 sm:py-0 sm:h-16 flex flex-wrap items-center justify-between gap-x-3 gap-y-2 sm:gap-x-4 lg:gap-x-6">
+      <div className="mx-auto max-w-[1600px] px-4 md:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
         <Link
           href="/"
           className="flex items-center shrink-0"
@@ -91,7 +91,7 @@ export default function Navbar({
           />
         </Link>
 
-        <nav className="hidden sm:flex items-center gap-2 lg:gap-6 flex-wrap">
+        <nav className="hidden md:flex items-center gap-3 lg:gap-6">
           {navLinks.map((link) => {
             const Icon = link.icon;
             return (
@@ -111,7 +111,7 @@ export default function Navbar({
           })}
         </nav>
 
-        <div className="hidden sm:flex items-center gap-1.5 lg:gap-3 shrink-0 flex-wrap">
+        <div className="hidden md:flex items-center gap-1.5 lg:gap-3 shrink-0">
           {showGetAQuote && (
             <Link
               href="/get-a-quote"
@@ -134,7 +134,7 @@ export default function Navbar({
           type="button"
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
           onClick={() => setMobileOpen((v) => !v)}
-          className="sm:hidden flex items-center justify-center w-10 h-10 rounded-md text-brand-navy shrink-0"
+          className="md:hidden flex items-center justify-center w-10 h-10 rounded-md text-brand-navy shrink-0"
         >
           {mobileOpen ? <X size={26} /> : <Menu size={26} />}
         </button>
@@ -149,7 +149,7 @@ export default function Navbar({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.22, ease: [0.4, 0, 0.2, 1] }}
-            className="sm:hidden bg-white border-t border-black/5 shadow-lg"
+            className="md:hidden bg-white border-t border-black/5 shadow-lg"
           >
             <nav className="flex flex-col px-6 py-4">
               {navLinks.map((link, i) => {
