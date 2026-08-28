@@ -29,6 +29,8 @@ const ICON_MAP: Record<string, typeof Info> = {
   careers: Briefcase,
 };
 
+const PRISMMAOS_URL = "https://prismmaos.onrender.com/login";
+
 export default function Navbar({
   nav,
   announcement,
@@ -73,7 +75,7 @@ export default function Navbar({
       {announcement.enabled && announcement.message && (
         <AnnouncementBanner message={announcement.message} />
       )}
-      <div className="mx-auto max-w-[1600px] px-4 sm:px-8 h-24 flex items-center justify-between gap-6">
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-8 h-16 flex items-center justify-between gap-6">
         <Link
           href="/"
           className="flex items-center shrink-0"
@@ -82,8 +84,8 @@ export default function Navbar({
           <Image
             src="/assets/logos/prismma_main_logo.png"
             alt="Prismma Express"
-            width={205}
-            height={35}
+            width={160}
+            height={28}
             priority
           />
         </Link>
@@ -108,16 +110,22 @@ export default function Navbar({
           })}
         </nav>
 
-        <div className="hidden sm:flex items-center gap-4 shrink-0">
+        <div className="hidden sm:flex items-center gap-3 shrink-0">
           {showGetAQuote && (
             <Link
               href="/get-a-quote"
-              className="rounded-md bg-brand-orange px-5 py-3 text-base font-medium text-white hover:opacity-90 transition-opacity whitespace-nowrap"
+              className="rounded-md bg-brand-orange px-4 py-2 text-sm font-medium text-white hover:opacity-90 transition-opacity whitespace-nowrap"
             >
               Get a Quote
             </Link>
           )}
-          <LoginButton label="Login" size="large" />
+          <LoginButton label="Internal Portal" size="default" />
+          <Link
+            href={PRISMMAOS_URL}
+            className="inline-flex items-center gap-2 rounded-md border border-brand-navy px-4 py-2 text-sm font-medium text-brand-navy hover:bg-brand-navy hover:text-white transition-colors whitespace-nowrap"
+          >
+            PrismmaOS
+          </Link>
         </div>
 
         <button
@@ -172,7 +180,13 @@ export default function Navbar({
                     Get a Quote
                   </Link>
                 )}
-                <LoginButton />
+                <LoginButton label="Internal Portal" />
+                <Link
+                  href={PRISMMAOS_URL}
+                  className="flex items-center justify-center gap-2 rounded-md border border-brand-navy px-5 py-2.5 text-sm font-medium text-brand-navy"
+                >
+                  PrismmaOS
+                </Link>
               </div>
             </nav>
           </motion.div>
