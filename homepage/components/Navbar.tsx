@@ -76,7 +76,7 @@ export default function Navbar({
       {announcement.enabled && announcement.message && (
         <AnnouncementBanner message={announcement.message} />
       )}
-      <div className="mx-auto max-w-[1600px] px-4 md:px-6 lg:px-8 py-2 lg:py-0 lg:h-16 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+      <div className="mx-auto max-w-[1600px] px-4 md:px-6 xl:px-8 h-16 flex items-center justify-between gap-4">
         <Link
           href="/"
           className="flex items-center shrink-0"
@@ -91,18 +91,18 @@ export default function Navbar({
           />
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-3 lg:gap-6">
+        <nav className="hidden xl:flex items-center gap-4 xl:gap-6">
           {navLinks.map((link) => {
             const Icon = link.icon;
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className="relative flex items-center gap-1.5 text-xs lg:text-base text-body hover:text-brand-navy transition-colors whitespace-nowrap group"
+                className="relative flex items-center gap-1.5 text-sm text-body hover:text-brand-navy transition-colors whitespace-nowrap group"
               >
                 <Icon
-                  size={14}
-                  className="opacity-60 group-hover:opacity-100 transition-opacity hidden lg:inline"
+                  size={16}
+                  className="opacity-60 group-hover:opacity-100 transition-opacity"
                 />
                 {link.label}
                 <span className="absolute -bottom-2 left-0 w-0 h-px bg-brand-orange transition-all group-hover:w-full" />
@@ -111,21 +111,21 @@ export default function Navbar({
           })}
         </nav>
 
-        <div className="hidden lg:flex items-center gap-1.5 lg:gap-3 shrink-0">
+        <div className="hidden xl:flex items-center gap-2 shrink-0">
           {showGetAQuote && (
             <Link
               href="/get-a-quote"
-              className="rounded-md bg-brand-orange px-2.5 py-1.5 lg:px-4 lg:py-2 text-xs lg:text-sm font-medium text-white hover:opacity-90 transition-opacity whitespace-nowrap"
+              className="rounded-md bg-brand-orange px-4 py-2 text-sm font-medium text-white hover:opacity-90 transition-opacity whitespace-nowrap"
             >
               Get a Quote
             </Link>
           )}
-          <LoginButton label="Internal Portal" size="nav" />
+          <LoginButton label="Internal Portal" size="default" />
           <Link
             href={PRISMMAOS_URL}
-            className="inline-flex items-center gap-1.5 rounded-md border border-brand-navy px-2.5 py-1.5 lg:px-4 lg:py-2 text-xs lg:text-sm font-medium text-brand-navy hover:bg-brand-navy hover:text-white transition-colors whitespace-nowrap"
+            className="inline-flex items-center gap-2 rounded-md border border-brand-navy px-4 py-2 text-sm font-medium text-brand-navy hover:bg-brand-navy hover:text-white transition-colors whitespace-nowrap"
           >
-            <LogIn size={14} />
+            <LogIn size={16} />
             PrismmaOS
           </Link>
         </div>
@@ -134,7 +134,7 @@ export default function Navbar({
           type="button"
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
           onClick={() => setMobileOpen((v) => !v)}
-          className="lg:hidden flex items-center justify-center w-10 h-10 rounded-md text-brand-navy shrink-0"
+          className="xl:hidden flex items-center justify-center w-10 h-10 rounded-md text-brand-navy shrink-0"
         >
           {mobileOpen ? <X size={26} /> : <Menu size={26} />}
         </button>
@@ -149,7 +149,7 @@ export default function Navbar({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.22, ease: [0.4, 0, 0.2, 1] }}
-            className="lg:hidden bg-white border-t border-black/5 shadow-lg"
+            className="xl:hidden bg-white border-t border-black/5 shadow-lg"
           >
             <nav className="flex flex-col px-6 py-4">
               {navLinks.map((link, i) => {
