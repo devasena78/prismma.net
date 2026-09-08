@@ -15,6 +15,7 @@ const EMPTY_FORM = {
   serial_code: "",
   status: "in_storage",
   location: "",
+  year_manufactured: "",
 };
 
 interface Props {
@@ -64,6 +65,7 @@ export default function CreateAssetForm({ onClose, onCreated, onNavigateToAsset 
         serial_code: form.serial_code,
         status: form.status,
         location: form.location || undefined,
+        year_manufactured: form.year_manufactured ? Number(form.year_manufactured) : undefined,
       });
       toast.success("Asset created, assign it to a person or department whenever you're ready");
       onCreated(created.id);
@@ -138,6 +140,15 @@ export default function CreateAssetForm({ onClose, onCreated, onNavigateToAsset 
             placeholder="Location (optional)"
             value={form.location}
             onChange={(e) => setForm({ ...form, location: e.target.value })}
+            className="w-full rounded-md border border-border/10 px-3 py-2.5 text-sm bg-surface text-body"
+          />
+          <input
+            type="number"
+            placeholder="Year manufactured (optional)"
+            min={1900}
+            max={2100}
+            value={form.year_manufactured}
+            onChange={(e) => setForm({ ...form, year_manufactured: e.target.value })}
             className="w-full rounded-md border border-border/10 px-3 py-2.5 text-sm bg-surface text-body"
           />
 

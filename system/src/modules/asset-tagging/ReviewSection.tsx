@@ -5,7 +5,7 @@ import { useToast } from "../../context/ToastContext";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import EmptyState from "../../components/EmptyState";
 import Lightbox from "../../components/Lightbox";
-import { STATUS_META, STATUS_OPTIONS } from "./statusMeta";
+import { STATUS_META, DIRECT_STATUS_OPTIONS } from "./statusMeta";
 
 export default function ReviewSection() {
   const [submissions, setSubmissions] = useState<any[]>([]);
@@ -88,7 +88,7 @@ export default function ReviewSection() {
                     onChange={(e) => setFinalStatusDrafts({ ...finalStatusDrafts, [s.id]: e.target.value })}
                     className="rounded-md border border-border/10 px-3 py-2 text-sm bg-surface text-body"
                   >
-                    {STATUS_OPTIONS.map((opt) => (
+                    {DIRECT_STATUS_OPTIONS.map((opt) => (
                       <option key={opt.value} value={opt.value}>{opt.label}</option>
                     ))}
                   </select>

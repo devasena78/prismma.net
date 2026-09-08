@@ -61,6 +61,7 @@ export default function AssetDetailPanel({ assetId, isAssetAdmin, isSuperadmin, 
       description: a.description || "",
       category_id: a.category_id,
       serial_code: a.serial_code,
+      year_manufactured: a.year_manufactured ?? "",
       status: a.status,
       photos: a.photos || [],
     });
@@ -105,6 +106,9 @@ export default function AssetDetailPanel({ assetId, isAssetAdmin, isSuperadmin, 
         category_id: Number(identityForm.category_id),
         photo_urls: identityForm.photos,
       };
+      payload.year_manufactured = identityForm.year_manufactured
+        ? Number(identityForm.year_manufactured)
+        : null;
       if (isSuperadmin) {
         payload.serial_code = identityForm.serial_code;
         if (identityForm.status !== asset.status) {
@@ -247,6 +251,10 @@ export default function AssetDetailPanel({ assetId, isAssetAdmin, isSuperadmin, 
                     <div>
                       <p className="text-muted text-xs">Serial Code</p>
                       <p className="text-heading">{asset.serial_code}</p>
+                    </div>
+                    <div>
+                      <p className="text-muted text-xs">Year Manufactured</p>
+                      <p className="text-heading">{asset.year_manufactured || "—"}</p>
                     </div>
                     <div>
                       <p className="text-muted text-xs">Assigned To</p>
@@ -427,6 +435,17 @@ export default function AssetDetailPanel({ assetId, isAssetAdmin, isSuperadmin, 
                       className="w-full rounded-md border border-border/10 px-3 py-2.5 text-sm bg-surface text-body disabled:opacity-50"
                     />
                     {!isSuperadmin && <p className="text-xs text-muted mt-1">Only a superadmin can change the serial code</p>}
+                  </div>
+                  <div>
+                    <input
+                      type="number"
+                      min={1900}
+                      max={2100}
+                      value={identityForm.year_manufactured}
+                      onChange={(e) => setIdentityForm({ ...identityForm, year_manufactured: e.target.value })}
+                      placeholder="Year manufactured"
+                      className="w-full rounded-md border border-border/10 px-3 py-2.5 text-sm bg-surface text-body"
+                    />
                   </div>
 
                   {identityError && (

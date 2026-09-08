@@ -1,6 +1,11 @@
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 let accessToken: string | null = null;
+let onSessionExpired: (() => void) | null = null;
+
+export function setSessionExpiredHandler(handler: (() => void) | null) {
+  onSessionExpired = handler;
+}
 
 export function setAccessToken(token: string | null) {
   accessToken = token;
@@ -35,6 +40,8 @@ async function request(path: string, options: RequestOptions = {}) {
     if (refreshed) {
       return request(path, options);
     }
+    accessToken = null;
+    if (onSessionExpired) onSessionExpired();
   }
 
   if (!res.ok) {

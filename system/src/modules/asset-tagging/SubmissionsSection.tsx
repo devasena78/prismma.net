@@ -7,7 +7,7 @@ import EmptyState from "../../components/EmptyState";
 import Lightbox from "../../components/Lightbox";
 import SearchableSelect from "./SearchableSelect";
 import PhotoManager from "./PhotoManager";
-import { STATUS_META, STATUS_OPTIONS } from "./statusMeta";
+import { STATUS_META, DIRECT_STATUS_OPTIONS } from "./statusMeta";
 
 function SubmissionCard({ s, onPhotoClick }: { s: any; onPhotoClick: (url: string) => void }) {
   const proposedInfo = STATUS_META[s.proposed_status];
@@ -197,7 +197,7 @@ function CreateSubmissionForm({ onClose, onCreated }: { onClose: () => void; onC
                 onChange={(e) => setProposedStatus(e.target.value)}
                 className="w-full rounded-md border border-border/10 px-3 py-2.5 text-sm bg-surface text-body"
               >
-                {STATUS_OPTIONS.map((s) => (
+                {DIRECT_STATUS_OPTIONS.map((s) => (
                   <option key={s.value} value={s.value}>{s.label}</option>
                 ))}
               </select>

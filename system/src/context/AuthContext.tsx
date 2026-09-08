@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import { api, setAccessToken } from "../lib/api";
+import { api, setAccessToken, setSessionExpiredHandler } from "../lib/api";
 
 interface User {
   id: number;
@@ -52,6 +52,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setLoading(false);
     }
     bootstrap();
+
+    setSessionExpiredHandler(() => {
+      setUser(null);
+      if (window.location.pathname !== "/login") {
+        window.location.href = "/login";
+      }
+    });
+
+    return () => setSessionExpiredHandler(null);
   }, []);
 
   async function login(identifier: string, password: string) {

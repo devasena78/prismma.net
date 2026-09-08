@@ -36,6 +36,7 @@ class Asset(Base):
     serial_code: Mapped[str] = mapped_column(String(255), unique=True, nullable=False, index=True)
     status: Mapped[str] = mapped_column(String(30), nullable=False, default="in_storage")
     location: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    year_manufactured: Mapped[int | None] = mapped_column(Integer, nullable=True)
     assigned_person_id: Mapped[int | None] = mapped_column(Integer, ForeignKey("users.id", ondelete="SET NULL"), nullable=True)
     assigned_department_id: Mapped[int | None] = mapped_column(Integer, ForeignKey("departments.id", ondelete="SET NULL"), nullable=True)
     created_by: Mapped[int] = mapped_column(Integer, ForeignKey("users.id", ondelete="RESTRICT"), nullable=False)
@@ -191,6 +192,7 @@ class AssetCreate(BaseModel):
     serial_code: str
     status: str = "in_storage"
     location: str | None = None
+    year_manufactured: int | None = None
 
 
 class AssetUpdate(BaseModel):
@@ -201,6 +203,7 @@ class AssetUpdate(BaseModel):
     serial_code: str | None = None
     status: str | None = None
     location: str | None = None
+    year_manufactured: int | None = None
 
 
 class AssignPayload(BaseModel):
@@ -220,6 +223,7 @@ class AssetRead(BaseModel):
     serial_code: str
     status: str
     location: str | None
+    year_manufactured: int | None
     assigned_person_id: int | None
     assigned_person_name: str | None
     assigned_department_id: int | None
@@ -279,6 +283,7 @@ def _serialize_asset(asset: Asset) -> AssetRead:
         serial_code=asset.serial_code,
         status=asset.status,
         location=asset.location,
+        year_manufactured=asset.year_manufactured,
         assigned_person_id=asset.assigned_person_id,
         assigned_person_name=asset.assigned_person.name if asset.assigned_person else None,
         assigned_department_id=asset.assigned_department_id,
@@ -472,6 +477,7 @@ def create_asset(
         serial_code=payload.serial_code,
         status=payload.status,
         location=payload.location,
+        year_manufactured=payload.year_manufactured,
         created_by=current_user.id,
     )
     db.add(asset)
@@ -660,6 +666,8 @@ def create_submission(
         raise HTTPException(status_code=404, detail="Asset not found")
     if payload.proposed_status not in VALID_STATUSES:
         raise HTTPException(status_code=400, detail="Invalid status")
+    if payload.proposed_status == "in_use":
+        raise HTTPException(status_code=400, detail="A submission can't propose In Use, assign the asset to a person or department through Assign instead.")
 
     submission = AssetSubmission(
         asset_id=asset_id,
@@ -717,6 +725,8 @@ def review_submission(
         raise HTTPException(status_code=400, detail="This submission has already been reviewed")
     if payload.final_status not in VALID_STATUSES:
         raise HTTPException(status_code=400, detail="Invalid status")
+    if payload.final_status == "in_use":
+        raise HTTPException(status_code=400, detail="A submission can't be finalized as In Use, assign the asset to a person or department through Assign instead.")
 
     asset = db.query(Asset).filter(Asset.id == submission.asset_id).first()
     if asset:

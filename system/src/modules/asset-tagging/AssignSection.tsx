@@ -20,6 +20,7 @@ export default function AssignSection() {
   const [sortKey, setSortKey] = useState<SortKey>("name");
   const [sortDesc, setSortDesc] = useState(false);
   const [openRowId, setOpenRowId] = useState<number | null>(null);
+  const [detailRowId, setDetailRowId] = useState<number | null>(null);
   const [draftPerson, setDraftPerson] = useState("");
   const [draftDept, setDraftDept] = useState("");
   const [saving, setSaving] = useState(false);
@@ -146,11 +147,27 @@ export default function AssignSection() {
                 {filtered.map((a) => {
                   const statusInfo = STATUS_META[a.status];
                   const isOpen = openRowId === a.id;
+                  const isDetailOpen = detailRowId === a.id;
                   return (
                     <tr key={a.id} className="border-t border-border/10 relative">
-                      <td className="px-4 py-3">
-                        <p className="font-medium text-heading">{a.name}</p>
+                      <td
+                        className="px-4 py-3 cursor-pointer"
+                        onClick={() => setDetailRowId(isDetailOpen ? null : a.id)}
+                      >
+                        <p className="font-medium text-heading hover:underline">{a.name}</p>
                         <p className="text-xs text-muted">{a.tag_id}</p>
+                        {isDetailOpen && (
+                          <div className="mt-2 text-xs text-body bg-surface-alt rounded-md px-2.5 py-2 space-y-1 max-w-xs">
+                            <p><span className="text-muted">Serial: </span>{a.serial_code}</p>
+                            <p><span className="text-muted">Location: </span>{a.location || "—"}</p>
+                            {a.year_manufactured && (
+                              <p><span className="text-muted">Year: </span>{a.year_manufactured}</p>
+                            )}
+                            {a.description && (
+                              <p><span className="text-muted">Notes: </span>{a.description}</p>
+                            )}
+                          </div>
+                        )}
                       </td>
                       <td className="px-4 py-3 text-body">{a.category_name}</td>
                       <td className="px-4 py-3">
