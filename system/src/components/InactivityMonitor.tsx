@@ -35,9 +35,13 @@ export default function InactivityMonitor() {
   }, [idleLimitMs, warningCountdownS]);
 
   const handleLogout = useCallback(async () => {
+    if (idleTimer.current) clearTimeout(idleTimer.current);
+    if (countdownTimer.current) clearInterval(countdownTimer.current);
+    setWarning(false);
+    setSecondsLeft(warningCountdownS);
     await logout();
     navigate("/login");
-  }, [logout, navigate]);
+  }, [logout, navigate, warningCountdownS]);
 
   useEffect(() => {
     if (!user) return;

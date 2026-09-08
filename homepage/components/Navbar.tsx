@@ -13,7 +13,6 @@ import {
   Briefcase,
   Menu,
   X,
-  LogIn,
 } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import LoginButton from "./LoginButton";
@@ -29,8 +28,6 @@ const ICON_MAP: Record<string, typeof Info> = {
   contact: Mail,
   careers: Briefcase,
 };
-
-const PRISMMAOS_URL = "https://prismmaos.onrender.com/login";
 
 export default function Navbar({
   nav,
@@ -121,13 +118,6 @@ export default function Navbar({
             </Link>
           )}
           <LoginButton label="Internal Portal" size="default" />
-          <Link
-            href={PRISMMAOS_URL}
-            className="inline-flex items-center gap-2 rounded-md border border-brand-navy px-4 py-2 text-sm font-medium text-brand-navy hover:bg-brand-navy hover:text-white transition-colors whitespace-nowrap"
-          >
-            <LogIn size={16} />
-            PrismmaOS
-          </Link>
         </div>
 
         <button
@@ -183,13 +173,6 @@ export default function Navbar({
                   </Link>
                 )}
                 <LoginButton label="Internal Portal" fullWidth />
-                <Link
-                  href={PRISMMAOS_URL}
-                  className="flex items-center justify-center gap-2 rounded-md border border-brand-navy px-5 py-2.5 text-sm font-medium text-brand-navy"
-                >
-                  <LogIn size={16} />
-                  PrismmaOS
-                </Link>
               </div>
             </nav>
           </motion.div>
