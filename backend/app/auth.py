@@ -148,12 +148,13 @@ def login(request: Request, payload: LoginRequest, response: Response, db: Sessi
         {"sub": str(user.id), "role": user.role})
     refresh_token = create_refresh_token({"sub": str(user.id)})
 
+    is_secure = settings.ENVIRONMENT != "development"
     response.set_cookie(
         key="refresh_token",
         value=refresh_token,
         httponly=True,
-        secure=settings.ENVIRONMENT != "development",
-        samesite="strict",
+        secure=is_secure,
+        samesite="none" if is_secure else "lax",
         max_age=settings.REFRESH_TOKEN_EXPIRE_DAYS * 24 * 60 * 60,
         path="/auth",
     )

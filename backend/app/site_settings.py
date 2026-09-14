@@ -26,7 +26,7 @@ DEFAULT_SETTINGS = {
     "site_info.email": "enquiry@prismma.net",
     "site_info.phone": "+6 010 660 6600\n+6 016 850 4340",
     "site_info.address": "NO. 736, Lorong Perindustrian Bukit Minyak 11, Kawasan Bukit Minyak, 14100 Simpang Ampat, Pulau Pinang, MALAYSIA.",
-    "system.inactivity_timeout_minutes": "20",
+    "system.inactivity_timeout_minutes": "60",
     "system.inactivity_warning_seconds": "60",
     "system.login_max_attempts": "5",
     "system.lockout_stage1_minutes": "15",
@@ -256,7 +256,7 @@ def update_config(
 def get_session_config(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     _ensure_seeded(db)
     return SessionConfigRead(
-        inactivity_timeout_minutes=int(_get_setting(db, "system.inactivity_timeout_minutes", "20")),
+        inactivity_timeout_minutes=int(_get_setting(db, "system.inactivity_timeout_minutes", "60")),
         inactivity_warning_seconds=int(_get_setting(db, "system.inactivity_warning_seconds", "60")),
     )
 

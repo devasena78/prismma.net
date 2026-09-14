@@ -18,6 +18,25 @@ const EMPTY_FORM = {
   year_manufactured: "",
 };
 
+const DRAFT_KEY = "create_asset_draft";
+
+function loadDraft() {
+  try {
+    const raw = sessionStorage.getItem(DRAFT_KEY);
+    if (!raw) return EMPTY_FORM;
+    const parsed = JSON.parse(raw);
+    return { ...EMPTY_FORM, ...parsed };
+  } catch {
+    return EMPTY_FORM;
+  }
+}
+
+function clearDraft() {
+  try {
+    sessionStorage.removeItem(DRAFT_KEY);
+  } catch {}
+}
+
 interface Props {
   onClose: () => void;
   onCreated: (newAssetId?: number) => void;
@@ -26,7 +45,11 @@ interface Props {
 
 export default function CreateAssetForm({ onClose, onCreated, onNavigateToAsset }: Props) {
   const [categories, setCategories] = useState<any[]>([]);
-  const [form, setForm] = useState(EMPTY_FORM);
+  const [form, setForm] = useState(loadDraft);
+  const [restoredDraft] = useState(() => {
+    const d = loadDraft();
+    return JSON.stringify(d) !== JSON.stringify(EMPTY_FORM);
+  });
   const [error, setError] = useState<string | null>(null);
   const [conflict, setConflict] = useState<{ id: number; tagId: string } | null>(null);
   const [saving, setSaving] = useState(false);
@@ -34,6 +57,14 @@ export default function CreateAssetForm({ onClose, onCreated, onNavigateToAsset 
   const toast = useToast();
 
   const hasChanges = JSON.stringify(form) !== JSON.stringify(EMPTY_FORM);
+
+  useEffect(() => {
+    if (hasChanges) {
+      try {
+        sessionStorage.setItem(DRAFT_KEY, JSON.stringify(form));
+      } catch {}
+    }
+  }, [form, hasChanges]);
 
   function attemptClose() {
     if (hasChanges) setConfirmDiscard(true);
@@ -68,6 +99,7 @@ export default function CreateAssetForm({ onClose, onCreated, onNavigateToAsset 
         year_manufactured: form.year_manufactured ? Number(form.year_manufactured) : undefined,
       });
       toast.success("Asset created, assign it to a person or department whenever you're ready");
+      clearDraft();
       onCreated(created.id);
       onClose();
     } catch (err: any) {
@@ -86,7 +118,12 @@ export default function CreateAssetForm({ onClose, onCreated, onNavigateToAsset 
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
       <div className="bg-surface rounded-xl border border-border/10 max-w-md w-full shadow-lg max-h-[85vh] overflow-y-auto">
         <div className="flex items-center justify-between px-6 py-4 border-b border-border/10">
-          <h3 className="font-display text-lg font-semibold text-heading">Add Asset</h3>
+          <div>
+            <h3 className="font-display text-lg font-semibold text-heading">Add Asset</h3>
+            {restoredDraft && (
+              <p className="text-xs text-brand-orange mt-0.5">Restored your unsaved draft</p>
+            )}
+          </div>
           <button onClick={attemptClose} className="text-body hover:text-heading">
             <X size={18} />
           </button>
@@ -191,6 +228,7 @@ export default function CreateAssetForm({ onClose, onCreated, onNavigateToAsset 
           confirmLabel="Discard"
           onConfirm={() => {
             setConfirmDiscard(false);
+            clearDraft();
             onClose();
           }}
           onCancel={() => setConfirmDiscard(false)}

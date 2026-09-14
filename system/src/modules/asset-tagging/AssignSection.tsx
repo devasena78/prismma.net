@@ -164,7 +164,7 @@ export default function AssignSection() {
                               <p><span className="text-muted">Year: </span>{a.year_manufactured}</p>
                             )}
                             {a.description && (
-                              <p><span className="text-muted">Notes: </span>{a.description}</p>
+                              <p className="whitespace-pre-wrap"><span className="text-muted">Notes: </span>{a.description}</p>
                             )}
                           </div>
                         )}

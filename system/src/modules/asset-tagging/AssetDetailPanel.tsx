@@ -240,7 +240,7 @@ export default function AssetDetailPanel({ assetId, isAssetAdmin, isSuperadmin, 
                   )}
 
                   {asset.description && (
-                    <p className="text-sm text-body bg-surface-alt rounded-md px-3 py-2.5">{asset.description}</p>
+                    <p className="text-sm text-body bg-surface-alt rounded-md px-3 py-2.5 whitespace-pre-wrap">{asset.description}</p>
                   )}
 
                   <div className="grid grid-cols-2 gap-3 text-sm">
