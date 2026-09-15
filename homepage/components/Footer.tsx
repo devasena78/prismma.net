@@ -159,16 +159,18 @@ export default function Footer({
             {phoneLinks.map((l) => (
               <li key={l.id} className="flex items-start gap-2">
                 <Phone size={18} className="mt-0.5 shrink-0" />
-                <span>
+                <a href={`tel:${l.url.replace(/\s+/g, "")}`} className="hover:text-white transition-colors">
                   {l.label && <span className="text-white/50">{l.label}: </span>}
                   {l.url}
-                </span>
+                </a>
               </li>
             ))}
             {siteInfo.email && (
               <li className="flex items-center gap-2">
                 <Mail size={18} className="shrink-0" />
-                <span>{siteInfo.email}</span>
+                <a href={`mailto:${siteInfo.email}`} className="hover:text-white transition-colors">
+                  {siteInfo.email}
+                </a>
               </li>
             )}
           </ul>

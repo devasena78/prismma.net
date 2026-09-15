@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
   Info,
@@ -36,6 +37,7 @@ export default function Navbar({
   nav: NavPage[];
   announcement: Announcement;
 }) {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -91,18 +93,27 @@ export default function Navbar({
         <nav className="hidden xl:flex items-center gap-4 xl:gap-6">
           {navLinks.map((link) => {
             const Icon = link.icon;
+            const isActive = pathname === link.href;
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className="relative flex items-center gap-1.5 text-sm text-body hover:text-brand-navy transition-colors whitespace-nowrap group"
+                className={`relative flex items-center gap-1.5 text-sm transition-colors whitespace-nowrap group ${
+                  isActive ? "text-brand-navy font-medium" : "text-body hover:text-brand-navy"
+                }`}
               >
                 <Icon
                   size={16}
-                  className="opacity-60 group-hover:opacity-100 transition-opacity"
+                  className={`transition-opacity ${
+                    isActive ? "opacity-100" : "opacity-60 group-hover:opacity-100"
+                  }`}
                 />
                 {link.label}
-                <span className="absolute -bottom-2 left-0 w-0 h-px bg-brand-orange transition-all group-hover:w-full" />
+                <span
+                  className={`absolute -bottom-2 left-0 h-px bg-brand-orange transition-all ${
+                    isActive ? "w-full" : "w-0 group-hover:w-full"
+                  }`}
+                />
               </Link>
             );
           })}
@@ -144,6 +155,7 @@ export default function Navbar({
             <nav className="flex flex-col px-6 py-4">
               {navLinks.map((link, i) => {
                 const Icon = link.icon;
+                const isActive = pathname === link.href;
                 return (
                   <motion.div
                     key={link.href}
@@ -154,7 +166,9 @@ export default function Navbar({
                     <Link
                       href={link.href}
                       onClick={() => setMobileOpen(false)}
-                      className="flex items-center gap-3 py-3.5 text-base text-brand-navy border-b border-black/5 last:border-b-0"
+                      className={`flex items-center gap-3 py-3.5 text-base border-b border-black/5 last:border-b-0 ${
+                        isActive ? "text-brand-orange font-medium" : "text-brand-navy"
+                      }`}
                     >
                       <Icon size={18} className="text-brand-orange" />
                       {link.label}
