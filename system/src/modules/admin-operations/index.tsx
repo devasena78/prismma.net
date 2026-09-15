@@ -45,22 +45,23 @@ export default function AdminOperations() {
   const [tab, setTabState] = useState<Tab>(() => initialTab(isSuperadmin));
   const [counts, setCounts] = useState<Partial<Record<Tab, number>>>({});
 
-  useEffect(() => {
-    async function loadCounts() {
-      const [registrations, resets] = await Promise.all([
-        api.getPendingRegistrations(),
-        api.getPendingPasswordResets(),
-      ]);
-      const next: Partial<Record<Tab, number>> = {
-        registrations: registrations.length,
-        "password-resets": resets.length,
-      };
-      if (isSuperadmin) {
-        const requests = await api.getPendingModuleRequests();
-        next["module-requests"] = requests.length;
-      }
-      setCounts(next);
+  async function loadCounts() {
+    const [registrations, resets] = await Promise.all([
+      api.getPendingRegistrations(),
+      api.getPendingPasswordResets(),
+    ]);
+    const next: Partial<Record<Tab, number>> = {
+      registrations: registrations.length,
+      "password-resets": resets.length,
+    };
+    if (isSuperadmin) {
+      const requests = await api.getPendingModuleRequests();
+      next["module-requests"] = requests.length;
     }
+    setCounts(next);
+  }
+
+  useEffect(() => {
     loadCounts();
   }, [isSuperadmin]);
 
@@ -101,12 +102,12 @@ export default function AdminOperations() {
         })}
       </div>
 
-      {tab === "registrations" && <RegistrationsTab />}
+      {tab === "registrations" && <RegistrationsTab onCountChange={loadCounts} />}
       {tab === "module-requests" && isSuperadmin && <ModuleRequestsTab />}
       {tab === "users" && <UsersTab isSuperadmin={isSuperadmin} />}
       {tab === "analytics" && <AnalyticsTab isSuperadmin={isSuperadmin} />}
       {tab === "departments" && isSuperadmin && <DepartmentsTab />}
-      {tab === "password-resets" && <PasswordResetsTab />}
+      {tab === "password-resets" && <PasswordResetsTab onCountChange={loadCounts} />}
       {tab === "history" && isSuperadmin && <HistoryTab />}
     </DashboardLayout>
   );

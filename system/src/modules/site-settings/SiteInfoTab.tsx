@@ -32,7 +32,6 @@ export default function SiteInfoTab() {
       await api.updateSiteConfig({
         "site_info.company_name": settings["site_info.company_name"] || "",
         "site_info.email": settings["site_info.email"] || "",
-        "site_info.phone": settings["site_info.phone"] || "",
         "site_info.address": settings["site_info.address"] || "",
       });
       toast.success("Site info updated");
@@ -65,14 +64,6 @@ export default function SiteInfoTab() {
         />
       </div>
       <div>
-        <label className="text-xs text-muted block mb-1">Contact Phone</label>
-        <input
-          value={settings["site_info.phone"] || ""}
-          onChange={(e) => set("site_info.phone", e.target.value)}
-          className={FIELD_CLASS}
-        />
-      </div>
-      <div>
         <label className="text-xs text-muted block mb-1">Address</label>
         <textarea
           value={settings["site_info.address"] || ""}
@@ -81,6 +72,7 @@ export default function SiteInfoTab() {
           className={`${FIELD_CLASS} resize-y`}
         />
       </div>
+      <p className="text-xs text-muted">Phone numbers are managed under Social Links &rarr; Phone Numbers</p>
       <button
         onClick={save}
         disabled={saving}

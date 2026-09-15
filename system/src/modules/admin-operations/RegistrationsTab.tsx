@@ -5,7 +5,7 @@ import LoadingSpinner from "../../components/LoadingSpinner";
 import EmptyState from "../../components/EmptyState";
 import { useToast } from "../../context/ToastContext";
 
-export default function RegistrationsTab() {
+export default function RegistrationsTab({ onCountChange }: { onCountChange?: () => void }) {
   const [users, setUsers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [rejectingId, setRejectingId] = useState<number | null>(null);
@@ -28,6 +28,7 @@ export default function RegistrationsTab() {
       await api.approveRegistration(id);
       toast.success("Registration approved");
       load();
+      onCountChange?.();
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Could not approve registration");
     }
@@ -40,6 +41,7 @@ export default function RegistrationsTab() {
       setRejectingId(null);
       setReason("");
       load();
+      onCountChange?.();
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Could not reject registration");
     }

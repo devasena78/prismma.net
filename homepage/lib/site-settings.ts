@@ -48,7 +48,7 @@ export function getPublicSiteInfo(): Promise<SiteInfo> {
   });
 }
 
-export function getPublicLinks(type: "social" | "footer"): Promise<SiteLink[]> {
+export function getPublicLinks(type: "social" | "footer" | "phone"): Promise<SiteLink[]> {
   return safeFetch<SiteLink[]>(`/site-settings/public/links?type=${type}`, []);
 }
 

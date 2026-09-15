@@ -7,7 +7,7 @@ import ConfirmDialog from "../../components/ConfirmDialog";
 
 const FIELD_CLASS = "rounded-md border border-border/10 px-3 py-2 text-sm bg-surface text-body";
 
-function LinkGroup({ type, title, hint }: { type: "social" | "footer"; title: string; hint: string }) {
+function LinkGroup({ type, title, hint }: { type: "social" | "footer" | "phone"; title: string; hint: string }) {
   const [links, setLinks] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [label, setLabel] = useState("");
@@ -134,7 +134,7 @@ export default function SocialLinksTab() {
   return (
     <div className="max-w-2xl">
       <LinkGroup type="social" title="Social Links" hint="Shown in the homepage footer, Facebook, Instagram, LinkedIn, and so on" />
-      <LinkGroup type="footer" title="Footer Links" hint="Any other link you want listed in the footer" />
+      <LinkGroup type="phone" title="Phone Numbers" hint="Shown in the homepage footer, one per row, e.g. label 'Sales', number '+6 010 660 6600'" />
     </div>
   );
 }

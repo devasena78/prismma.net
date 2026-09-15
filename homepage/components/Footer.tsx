@@ -27,6 +27,7 @@ interface FooterProps {
   nav: NavPage[];
   siteInfo: SiteInfo;
   socialLinks: SiteLink[];
+  phoneLinks: SiteLink[];
   footerLinks: SiteLink[];
 }
 
@@ -34,6 +35,7 @@ export default function Footer({
   nav,
   siteInfo,
   socialLinks,
+  phoneLinks,
   footerLinks,
 }: FooterProps) {
   const companyLinks = nav.map((p) => ({ href: `/${p.slug}`, label: p.label }));
@@ -154,12 +156,15 @@ export default function Footer({
                 <span className="whitespace-pre-line">{siteInfo.address}</span>
               </li>
             )}
-            {siteInfo.phone && (
-              <li className="flex items-start gap-2">
+            {phoneLinks.map((l) => (
+              <li key={l.id} className="flex items-start gap-2">
                 <Phone size={18} className="mt-0.5 shrink-0" />
-                <span className="whitespace-pre-line">{siteInfo.phone}</span>
+                <span>
+                  {l.label && <span className="text-white/50">{l.label}: </span>}
+                  {l.url}
+                </span>
               </li>
-            )}
+            ))}
             {siteInfo.email && (
               <li className="flex items-center gap-2">
                 <Mail size={18} className="shrink-0" />

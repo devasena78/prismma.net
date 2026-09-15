@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import { Lock, KeyRound } from "lucide-react";
+import { Lock, KeyRound, X } from "lucide-react";
 import { api } from "../../lib/api";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import EmptyState from "../../components/EmptyState";
 import { useToast } from "../../context/ToastContext";
 
-export default function PasswordResetsTab() {
+export default function PasswordResetsTab({ onCountChange }: { onCountChange?: () => void }) {
   const [requests, setRequests] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const toast = useToast();
@@ -25,8 +25,20 @@ export default function PasswordResetsTab() {
       await api.approvePasswordReset(id);
       toast.success("Password reset approved");
       load();
+      onCountChange?.();
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Could not approve reset");
+    }
+  }
+
+  async function reject(id: number) {
+    try {
+      await api.rejectPasswordReset(id);
+      toast.success("Password reset request rejected");
+      load();
+      onCountChange?.();
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Could not reject request");
     }
   }
 
@@ -41,9 +53,14 @@ export default function PasswordResetsTab() {
             <p className="font-medium text-heading">{r.user_name}</p>
             <p className="text-sm text-body">{r.user_email} &middot; Requested {new Date(r.requested_at).toLocaleString()}</p>
           </div>
-          <button onClick={() => approve(r.id)} className="flex items-center gap-1.5 rounded-md bg-green-600 text-white px-4 py-2 text-sm font-medium hover:opacity-90">
-            <Lock size={14} /> Approve Reset
-          </button>
+          <div className="flex items-center gap-2">
+            <button onClick={() => approve(r.id)} className="flex items-center gap-1.5 rounded-md bg-green-600 text-white px-4 py-2 text-sm font-medium hover:opacity-90">
+              <Lock size={14} /> Approve Reset
+            </button>
+            <button onClick={() => reject(r.id)} className="flex items-center gap-1.5 rounded-md bg-red-50 text-red-600 border border-red-200 px-4 py-2 text-sm font-medium hover:bg-red-100">
+              <X size={14} /> Reject
+            </button>
+          </div>
         </div>
       ))}
     </div>

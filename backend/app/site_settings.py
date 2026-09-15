@@ -57,7 +57,7 @@ class SiteLink(Base):
     order: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
 
     __table_args__ = (
-        CheckConstraint("type IN ('social', 'footer')", name="site_links_type_check"),
+        CheckConstraint("type IN ('social', 'footer', 'phone')", name="site_links_type_check"),
     )
 
 
@@ -184,8 +184,8 @@ def create_link(
     db: Session = Depends(get_db),
     current_user: User = Depends(require_superadmin),
 ):
-    if payload.type not in ("social", "footer"):
-        raise HTTPException(status_code=400, detail="Type must be 'social' or 'footer'")
+    if payload.type not in ("social", "footer", "phone"):
+        raise HTTPException(status_code=400, detail="Type must be 'social', 'footer', or 'phone'")
     link = SiteLink(**payload.model_dump())
     db.add(link)
     db.commit()

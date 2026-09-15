@@ -43,12 +43,13 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const [maintenance, nav, siteInfo, socialLinks, footerLinks, announcement] = await Promise.all([
+  const [maintenance, nav, siteInfo, socialLinks, footerLinks, phoneLinks, announcement] = await Promise.all([
     getMaintenanceStatus(),
     getPublicNav(),
     getPublicSiteInfo(),
     getPublicLinks("social"),
     getPublicLinks("footer"),
+    getPublicLinks("phone"),
     getAnnouncement(),
   ]);
 
@@ -65,7 +66,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     },
     contactPoint: {
       "@type": "ContactPoint",
-      telephone: siteInfo.phone || "+6-010-660-6600",
+      telephone: phoneLinks[0]?.url || "+6-010-660-6600",
       contactType: "customer service",
       email: siteInfo.email || "enquiry@prismma.net",
     },
@@ -94,7 +95,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <GlobalBackground />
         <Navbar nav={nav} announcement={announcement} />
         <main className="flex-1">{children}</main>
-        <Footer nav={nav} siteInfo={siteInfo} socialLinks={socialLinks} footerLinks={footerLinks} />
+        <Footer nav={nav} siteInfo={siteInfo} socialLinks={socialLinks} footerLinks={footerLinks} phoneLinks={phoneLinks} />
         <CookieConsent />
       </body>
     </html>

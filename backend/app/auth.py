@@ -148,13 +148,12 @@ def login(request: Request, payload: LoginRequest, response: Response, db: Sessi
         {"sub": str(user.id), "role": user.role})
     refresh_token = create_refresh_token({"sub": str(user.id)})
 
-    is_secure = settings.ENVIRONMENT != "development"
     response.set_cookie(
         key="refresh_token",
         value=refresh_token,
         httponly=True,
-        secure=is_secure,
-        samesite="none" if is_secure else "lax",
+        secure=settings.ENVIRONMENT != "development",
+        samesite="strict",
         max_age=settings.REFRESH_TOKEN_EXPIRE_DAYS * 24 * 60 * 60,
         path="/auth",
     )
@@ -263,3 +262,22 @@ def approve_password_reset(
     db.commit()
 
     return {"message": "Reset approved. Email delivery is pending SMTP setup."}
+
+
+@router.post("/password-reset/{request_id}/reject")
+def reject_password_reset(
+    request_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_admin),
+):
+    reset_request = db.query(PasswordResetRequest).filter(
+        PasswordResetRequest.id == request_id).first()
+    if not reset_request:
+        raise HTTPException(status_code=404, detail="Request not found")
+
+    reset_request.status = "rejected"
+    reset_request.decided_at = datetime.utcnow()
+    reset_request.decided_by = current_user.id
+    db.commit()
+
+    return {"message": "Reset request rejected."}

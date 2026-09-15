@@ -200,6 +200,8 @@ export const api = {
   getPendingPasswordResets: () => request("/auth/password-reset/pending"),
   approvePasswordReset: (id: number) =>
     request(`/auth/password-reset/${id}/approve`, { method: "POST" }),
+  rejectPasswordReset: (id: number) =>
+    request(`/auth/password-reset/${id}/reject`, { method: "POST" }),
 
   getAllNews: () => request("/news?published_only=false"),
   createNews: (payload: Record<string, unknown>) =>
